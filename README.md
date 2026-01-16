@@ -1,8 +1,6 @@
-# 🎓 MASTER EXAM GUIDE: React Native + Express
+# React Native + Express
 
-Follow this guide strictly from **Top to Bottom**. Do not skip steps.
 
----
 
 ## phase 1: Create the Main Project Folder
 **Goal:** Create the container for your whole project.
@@ -213,6 +211,6 @@ const styles = StyleSheet.create({
     ```
 
 ### Step 3: View the App
--   **For Web (Exam Recommended):** Press `w` in the second terminal.
+-   **For Web:** Press `w` in the second terminal.
 -   **For Mobile:** Scan the QR code.
 -   **Result:** Press the button and see "Hello from Server...".
