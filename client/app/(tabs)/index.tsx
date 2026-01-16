@@ -1,86 +1,76 @@
-import { Image, StyleSheet, Platform, Button, Text, View, ScrollView, TextInput } from 'react-native'; // NEW: Added TextInput
+import { StyleSheet, Button, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
+import { useRouter } from 'expo-router'; // Import Router for navigation
 
 export default function HomeScreen() {
-  const [users, setUsers] = useState([]);
-  // NEW: State for the form inputs
+  const router = useRouter(); // Initialize navigation
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  // Fetch Function (Existing)
-  const fetchData = async () => {
-    try {
-      const response = await fetch('http://127.0.0.1:5001/users');
-      const data = await response.json();
-      setUsers(data);
-    } catch (error: any) {
-      console.error("Fetch Error:", error);
-      alert('Error connecting to server: ' + error.message);
+  // Function to save data and then navigate
+  const handleSubmit = async () => {
+    if (!name || !email) {
+      alert("Please fill all fields");
+      return;
     }
-  };
-
-  // NEW: Function to Add User
-  // NEW: Function to Add User (With Error Alerts)
-  const addUser = async () => {
-    console.log("Attempting to add user to 127.0.0.1:", name, email); // Debug log
 
     try {
+      console.log("Sending data to MySQL...");
       const response = await fetch('http://127.0.0.1:5001/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email })
       });
 
-      const result = await response.json(); // Get the actual response from server
+      const result = await response.json();
 
       if (response.ok) {
-        alert('Success: User Added!');
+        alert('Work 1 Done: Saved to Database!');
+
+        // Clear fields
         setName('');
         setEmail('');
-        fetchData();
+
+        // Work 2: Navigate to the next page
+        console.log("Navigating to Display Page...");
+        router.push('/display');
       } else {
-        // If the server says "No" (e.g. Database Error)
         alert('Server Error: ' + JSON.stringify(result));
       }
     } catch (error: any) {
-      // If the internet/connection fails
       alert('Network Error: ' + error.message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>User Manager</Text>
+      <Text style={styles.title}>Data Entry Form</Text>
+      <Text style={styles.subtitle}>Phase 1: Enter details to save in DB</Text>
 
-      {/* NEW: Input Form */}
       <View style={styles.inputContainer}>
+        <Text style={styles.label}>Full Name:</Text>
         <TextInput
-          placeholder="Enter Name"
+          placeholder="Enter your name"
           value={name}
           onChangeText={setName}
           style={styles.input}
         />
+
+        <Text style={styles.label}>Email Address:</Text>
         <TextInput
-          placeholder="Enter Email"
+          placeholder="Enter your email"
           value={email}
           onChangeText={setEmail}
           style={styles.input}
+          keyboardType="email-address"
         />
-        <Button title="Add New User" onPress={addUser} />
+
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit & View Results</Text>
+        </TouchableOpacity>
       </View>
 
-      <View style={styles.divider} />
-
-      <Button title="Refresh List" onPress={fetchData} color="gray" />
-
-      <ScrollView style={styles.listContainer}>
-        {users.map((user: any) => (
-          <View key={user.id} style={styles.card}>
-            <Text style={styles.name}>{user.name}</Text>
-            <Text style={styles.email}>{user.email}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      <Text style={styles.footer}>Clicking Submit saves to DB AND takes you to Page 2</Text>
     </View>
   );
 }
@@ -89,53 +79,60 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start', // Changed to start so it doesn't push to center
-    backgroundColor: '#fff',
-    padding: 50,
+    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
+    padding: 30,
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 20,
+    color: '#333',
   },
-  // NEW STYLES
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 30,
+  },
   inputContainer: {
     width: '100%',
-    marginBottom: 20,
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 15,
+    elevation: 5, // Shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#444',
+    marginBottom: 5,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-    width: '100%',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: '#ccc',
-    width: '100%',
-    marginVertical: 20,
-  },
-  // Existing styles...
-  listContainer: {
-    width: '100%',
-    marginTop: 20,
-  },
-  card: {
-    backgroundColor: '#f5f5f5',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 8,
-    borderWidth: 1,
     borderColor: '#ddd',
+    padding: 12,
+    marginBottom: 20,
+    borderRadius: 8,
+    fontSize: 16,
   },
-  name: {
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
   },
-  email: {
-    fontSize: 14,
-    color: 'gray',
-  },
+  footer: {
+    marginTop: 20,
+    fontSize: 12,
+    color: '#888',
+    textAlign: 'center',
+  }
 });
