@@ -16,7 +16,7 @@ export default function HomeScreen() {
 
     try {
       console.log("Sending data to MySQL...");
-      const response = await fetch('http://127.0.0.1:5001/users', {
+      const response = await fetch('http://localhost:5001/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email })

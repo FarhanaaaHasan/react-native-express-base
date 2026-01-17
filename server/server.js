@@ -34,7 +34,7 @@ db.connect((err) => {
 
 // Basic Route
 app.get('/', (req, res) => {
-    res.send('Hello from the Express Server!');
+    res.send('Hello from the Expres Server!');
 });
 // Get all users
 app.get('/users', (req, res) => {
@@ -65,8 +65,8 @@ app.post('/users', (req, res) => {
 
 
 // Start Server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://127.0.0.1:${PORT}`);
+app.listen(PORT, 'localhost', () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 // 404 Catch-all (to prevent HTML responses)

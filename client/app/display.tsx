@@ -13,7 +13,7 @@ export default function DisplayScreen() {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5001/users');
+           const response = await fetch('http://localhost:5001/users');
             const data = await response.json();
             setUsers(data);
         } catch (error) {
