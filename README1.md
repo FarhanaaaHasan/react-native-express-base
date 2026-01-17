@@ -175,6 +175,8 @@ app.use((req, res) => {
                         app/display.tsx for the list).
 
 ### code for index.tsx
+```typescript
+
 import { StyleSheet, Button, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router'; // Import Router for navigation
@@ -313,9 +315,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
-
+```
 
 ### display.tsx
+```typescript
+
 import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
@@ -394,4 +398,4 @@ const styles = StyleSheet.create({
     email: { fontSize: 14, color: '#555' }
 });
 
-
+```
