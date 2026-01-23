@@ -4,7 +4,7 @@ A robust demonstration of a full-stack mobile application architecture using **R
 
 ## 🚀 Overview
 
-MadCT is designed to demonstrate the core principles of modern web and mobile development. It bridges the gap between client-side user interaction and server-side logic, providing a blueprint for data-driven applications.
+This is designed to demonstrate the core principles of modern web and mobile development. It bridges the gap between client-side user interaction and server-side logic, providing a blueprint for data-driven applications.
 
 ### Key Features
 - **Dynamic Data Entry**: A clean, intuitive form for capturing user information.
